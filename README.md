@@ -1,5 +1,5 @@
 # Lyra Live _/
-View leaderboard, and Follow profitable traders, receive notifications and research trades.
+View leaderboard, follow profitable traders, receive notifications and research trades.
 
 ## Goal 
 To surface leaderboard of profitable traders on Lyra.
