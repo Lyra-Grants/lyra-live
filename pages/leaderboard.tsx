@@ -98,6 +98,50 @@ const Index = () => {
   //   if (COLUMNS && data) setIsLoading(false)
   // }, [COLUMNS, data, isLoading])
 
+  const getTableCellKey = (_dataCol: any, _index: number): string => {
+    let wallet: string = '';
+  
+    switch (_index) {
+      case 0:
+        wallet = `${ _dataCol.wallet }`
+      case 1:
+        wallet = `${ _dataCol.wallet }_tradeCount`
+        break
+      case 2:
+        wallet = `${ _dataCol.wallet }_duration`
+        break
+      case 3:
+        wallet = `${ _dataCol.wallet }_favAsset`
+        break
+      case 4:
+        wallet = `${ _dataCol.wallet }_pnl`
+        break
+    }
+    
+    return wallet
+  }
+
+  const getDataCol = (_dataCol: any, _index: number) => {
+    let dataCol: string | number = '';
+
+    switch (_index) {
+      case 1:
+        dataCol = _dataCol.trades_count
+        break
+      case 2:
+        dataCol = _dataCol.duration
+        break
+      case 3:
+        dataCol = _dataCol.favorite_asset
+        break
+      case 4:
+        dataCol = _dataCol.pnl
+        break
+    }
+
+    return dataCol
+  }
+
   return (
           <>
             <Box layerStyle={"card"} py={4} px={8} overflowX={"scroll"}>
@@ -106,43 +150,30 @@ const Index = () => {
                 Leaderboard
               </Text>
               <TableWrapper>
-                <TableHeaderCentering>
-
-                  {/* { COLUMNS && COLUMNS.map( (column): any => (
-                    <TableHeader key={`${ column.id }`}>{`${column.Header}`}</TableHeader>
-                  ))} */}
-                </TableHeaderCentering>
                 <TableColumnCentering>
-                  <TableColumnWallet>
-                    <TableHeaderWallet key={`${ COLUMNS[0].id }`}>{`${COLUMNS[0].Header}`}</TableHeaderWallet>
-                    { data && data.map( (dataCol): any => (
-                      <TableCell key={`${ dataCol.wallet }`}>{dataCol.wallet}</TableCell>
-                    ))}
-                  </TableColumnWallet>                
-                  <TableColumn>
-                    <TableHeaderWallet key={`${ COLUMNS[1].id }`}>{`${COLUMNS[1].Header}`}</TableHeaderWallet>
-                    { data && data.map( (dataCol): any => (
-                      <TableCell key={`${ dataCol.wallet }_tradeCount`}>{dataCol.trades_count}</TableCell>
-                    ))}
-                  </TableColumn>
-                  <TableColumn>
-                    <TableHeaderWallet key={`${ COLUMNS[2].id }`}>{`${COLUMNS[2].Header}`}</TableHeaderWallet>
-                    { data && data.map( (dataCol): any => (
-                      <TableCell key={`${ dataCol.wallet }_duration`}>{dataCol.duration}</TableCell>
-                    ))}
-                  </TableColumn>                
-                  <TableColumn>
-                    <TableHeaderWallet key={`${ COLUMNS[3].id }`}>{`${COLUMNS[3].Header}`}</TableHeaderWallet>
-                    { data && data.map( (dataCol): any => (
-                      <TableCell key={`${ dataCol.wallet }_favAsset`}>{dataCol.favorite_asset}</TableCell>
-                    ))}
-                  </TableColumn>
-                  <TableColumn>
-                    <TableHeaderWallet key={`${ COLUMNS[4].id }`}>{`${COLUMNS[4].Header}`}</TableHeaderWallet>
-                    { data && data.map( (dataCol): any => (
-                      <TableCell key={`${ dataCol.wallet }_pnl`}>{dataCol.pnl}</TableCell>
-                    ))}
-                  </TableColumn>                
+                  { COLUMNS && COLUMNS.map( (column, index0: number): any => (
+                    <>
+                      {index0 == 0 ? (
+                        <TableColumnWallet>
+                          <TableHeader key={`${ column.id }`}>
+                            {`${column.Header}`}
+                          </TableHeader>
+                          { data && data.map( (dataCol, index1: number): any => (
+                            <TableCell key={`${getTableCellKey(dataCol, index0)}`}>{dataCol.wallet}</TableCell>
+                          ))}
+                        </TableColumnWallet>
+                      ) : (
+                        <TableColumn>
+                          <TableHeader key={`${ column.id }`}>
+                            {`${column.Header}`}
+                          </TableHeader>
+                          { data && data.map( (dataCol: any, index1: number): any => (
+                            <TableCell key={getTableCellKey(dataCol, index0)}>{getDataCol(dataCol, index0)}</TableCell>
+                          ))}
+                        </TableColumn>
+                      )}
+                    </>
+                  ))}
                 </TableColumnCentering>
               </TableWrapper>
             {/* </InfoBox> */}
