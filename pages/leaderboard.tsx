@@ -1,5 +1,11 @@
-import { Table } from "@/src/ui/table";
+// import { Table } from "@/src/ui/table";
+import React, {
+  useState,
+  useLayoutEffect,
+  useEffect
+} from 'react'
 import { Box, HStack, Text } from "@chakra-ui/react";
+import styled from 'styled-components'
 
 const COLUMNS = [
   {
@@ -41,6 +47,8 @@ const COLUMNS = [
 ];
 
 const Index = () => {
+  // const [isLoading, setIsLoading] = useState<Boolean>(true)
+
   const data = [
     {
       wallet: "0x11929e2734db5ef42f2c1019258cffe7a8b44da9",
@@ -86,14 +94,175 @@ const Index = () => {
     },
   ];
 
+  // useLayoutEffect(() => {
+  //   if (COLUMNS && data) setIsLoading(false)
+  // }, [COLUMNS, data, isLoading])
+
   return (
-    <Box layerStyle={"card"} py={4} px={8} overflowX={"scroll"}>
-      <Text variant="title" mb={4}>
-        Leaderboard
-      </Text>
-      <Table columns={COLUMNS} data={data} />
-    </Box>
+          <>
+            <Box layerStyle={"card"} py={4} px={8} overflowX={"scroll"}>
+            {/* <InfoBox> */}
+              <Text variant="title" mb={4}>
+                Leaderboard
+              </Text>
+              <TableWrapper>
+                <TableHeaderCentering>
+
+                  {/* { COLUMNS && COLUMNS.map( (column): any => (
+                    <TableHeader key={`${ column.id }`}>{`${column.Header}`}</TableHeader>
+                  ))} */}
+                </TableHeaderCentering>
+                <TableColumnCentering>
+                  <TableColumnWallet>
+                    <TableHeaderWallet key={`${ COLUMNS[0].id }`}>{`${COLUMNS[0].Header}`}</TableHeaderWallet>
+                    { data && data.map( (dataCol): any => (
+                      <TableCell key={`${ dataCol.wallet }`}>{dataCol.wallet}</TableCell>
+                    ))}
+                  </TableColumnWallet>                
+                  <TableColumn>
+                    <TableHeaderWallet key={`${ COLUMNS[1].id }`}>{`${COLUMNS[1].Header}`}</TableHeaderWallet>
+                    { data && data.map( (dataCol): any => (
+                      <TableCell key={`${ dataCol.wallet }_tradeCount`}>{dataCol.trades_count}</TableCell>
+                    ))}
+                  </TableColumn>
+                  <TableColumn>
+                    <TableHeaderWallet key={`${ COLUMNS[2].id }`}>{`${COLUMNS[2].Header}`}</TableHeaderWallet>
+                    { data && data.map( (dataCol): any => (
+                      <TableCell key={`${ dataCol.wallet }_duration`}>{dataCol.duration}</TableCell>
+                    ))}
+                  </TableColumn>                
+                  <TableColumn>
+                    <TableHeaderWallet key={`${ COLUMNS[3].id }`}>{`${COLUMNS[3].Header}`}</TableHeaderWallet>
+                    { data && data.map( (dataCol): any => (
+                      <TableCell key={`${ dataCol.wallet }_favAsset`}>{dataCol.favorite_asset}</TableCell>
+                    ))}
+                  </TableColumn>
+                  <TableColumn>
+                    <TableHeaderWallet key={`${ COLUMNS[4].id }`}>{`${COLUMNS[4].Header}`}</TableHeaderWallet>
+                    { data && data.map( (dataCol): any => (
+                      <TableCell key={`${ dataCol.wallet }_pnl`}>{dataCol.pnl}</TableCell>
+                    ))}
+                  </TableColumn>                
+                </TableColumnCentering>
+              </TableWrapper>
+            {/* </InfoBox> */}
+            </Box>
+          </>
   );
 };
 
 export default Index;
+
+const BidTableTitle = styled.h1`
+  margin-top: -5px;
+  text-align: center;
+  color: '#ffc482';
+`
+
+const InfoBox = styled.div`
+  font-size: 20px;
+  font-weight: 700;
+
+  padding: 30px;
+  margin: 30px 0px 80px 0px;
+
+  border-radius: 3rem;
+
+  box-shadow: .02rem 0.5rem 2rem '#ffc482';
+
+  :hover {
+    filter: drop-shadow(0 0 0.1px '#b3af8f';
+  }
+`
+
+const TableWrapper = styled.div`
+  justify-content: space-around;
+
+  margin-bottom: 50px;
+
+  text-align: center;
+
+  @media (max-width: 720px) {
+    width: auto;
+    max-width: 320px;
+  };
+
+  border-width: 0rem;
+  border-radius: 0rem;
+  border-style: outset;
+  border-color: '#ffc482';
+
+  font-size: 18px;
+  font-weight: 600;
+`
+
+const TableHeaderCentering = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const TableHeader = styled.div`
+  color: '#ffc482';
+  
+  font-size: 18px;
+  font-weight: 600;
+  
+  padding: 10px;
+  
+  width: 250px;
+  max-width: 250px;
+
+  border-bottom: 1px dashed '#b3af8f'};
+`
+
+const TableHeaderWallet = styled(TableHeader)`
+width: 450px;
+`
+
+const TableColumnCentering = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const TableColumn = styled.div`
+  align-items: center;
+  width: 250px;
+  max-width: 250px;
+`
+
+const TableColumnWallet = styled(TableColumn)`
+  align-items: center;
+  width: 450px;
+  max-width: 450px;
+`
+
+const TableCell = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-left: 14px;
+  padding-right: 14px;
+  height: 50px;
+`
+
+const TableText = styled.div`
+  padding-right: 10px;
+`
+
+const ETHLogo = styled.img`
+  height: 16px;
+  margin-right: 10px;
+  width: auto;
+`
+
+const ETHPrice = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-left: 11px;
+
+  font-size: 12.5px;
+  font-weight: 500;
+`
