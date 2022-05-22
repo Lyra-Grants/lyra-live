@@ -8,8 +8,6 @@ import { Box, HStack, Text } from "@chakra-ui/react";
 
 import Table from '../src/components/Table'
 
-
-
 const data = [
   {
     wallet: "0x11929e2734db5ef42f2c1019258cffe7a8b44da9",
@@ -55,7 +53,6 @@ const data = [
   },
 ];
 
-
 const COLUMNS = [
   {
     id: "wallet",
@@ -81,7 +78,7 @@ const COLUMNS = [
   },
   {
     id: "favorite_asset",
-    Header: "Favorite Asset",
+    Header: "Fav Asset",
     accessor: "favorite_asset",
   },
   {

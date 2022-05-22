@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 const SideBar = () => {
   const router = useRouter();
-  console.log(router.asPath);
 
   const links = [
     { url: "/leaderboard/", label: "Leaderboard" },

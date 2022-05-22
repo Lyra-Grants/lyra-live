@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { theme } from "@/src/theme";
 import styled from 'styled-components'
 import { Text } from "@chakra-ui/react";
 
@@ -61,50 +62,33 @@ const Table: FC<TableProps> = ({
     <>
       <Text variant="title" mb={4}>{title}</Text>
         <TableWrapper>
-          <TableColumnCentering>
-            { columns && columns.map( (column, index0: number): any => (
-              <>
-                {index0 == 0 ? (
-                  <TableColumnWallet>
-                    <TableHeader key={`${ column.id }`}>
-                      {`${column.Header}`}
-                    </TableHeader>
-                    { data && data.map( (dataCol, index1: number): any => (
-                      <TableCell key={`${getTableCellKey(dataCol, index0)}`}>{dataCol.wallet}</TableCell>
-                    ))}
-                  </TableColumnWallet>
-                ) : (
-                  <TableColumn>
-                    <TableHeader key={`${ column.id }`}>
-                      {`${column.Header}`}
-                    </TableHeader>
-                    { data && data.map( (dataCol: any, index1: number): any => (
-                      <TableCell key={getTableCellKey(dataCol, index0)}>{getDataCol(dataCol, index0)}</TableCell>
-                    ))}
-                  </TableColumn>
-                )}
-              </>
+          <tr key={'header'}>
+            { columns && columns.map( (column, index: number): any => (
+              <TableHeader className={`${column.Header}`} key={`${ index }-${column.id}`}>
+                {`${column.Header}`}
+              </TableHeader>
             ))}
-          </TableColumnCentering>
+          </tr>
+            <Scroll>
+            { data && data.map( (dataCol: any, index: number): any => (
+              <tr key={index}>
+                {Object.values(dataCol).map((val: any) => (
+                  <TableCell key={getTableCellKey(dataCol, index)}>
+                    {val.length > 10 ? val.slice(0, 6) + '...' : val}
+                  </TableCell>
+                ))}
+              </tr>
+            ))}
+            </Scroll>
         </TableWrapper>
     </>
   )
 }
 
-const InfoBox = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-
-  padding: 30px;
-  margin: 30px 0px 80px 0px;
-
-  border-radius: 3rem;
-
-  box-shadow: .02rem 0.5rem 2rem '#ffc482';
-
-  :hover {
-    filter: drop-shadow(0 0 0.1px '#b3af8f';
-  }
+const Scroll = styled.div`
+  overflow-y: scroll;
+  max-height: 200px;
+  scroll: smooth;
 `
 
 const TableWrapper = styled.div`
@@ -116,66 +100,42 @@ const TableWrapper = styled.div`
 
   @media (max-width: 720px) {
     width: auto;
-    max-width: 320px;
+    max-width: 330px;
   };
 
-  border-width: 0rem;
-  border-radius: 0rem;
-  border-style: outset;
-  border-color: '#ffc482';
+  border-width: 0.2rem;
+  border-radius: 0.1rem;
+  border-style: normal;
+  border: 1px solid red;
 
   font-size: 18px;
   font-weight: 600;
 `
 
-const TableHeaderCentering = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const TableHeader = styled.div`
-  color: '#ffc482';
+const TableHeader = styled.th`
+  color: #ffc482;
   
   font-size: 18px;
   font-weight: 600;
   
-  padding: 10px;
-  
-  width: 250px;
-  max-width: 250px;
+  padding: 1.5vw 3.8vw 1.5vw 3.8vw;
 
-  border-bottom: 1px dashed '#b3af8f'};
-`
-
-const TableHeaderWallet = styled(TableHeader)`
-width: 450px;
-`
-
-const TableColumnCentering = styled.div`
-  display: flex;
-  flex-direction: row;
 `
 
 const TableColumn = styled.div`
   align-items: center;
-  width: 250px;
-  max-width: 250px;
 `
 
-const TableColumnWallet = styled(TableColumn)`
-  align-items: center;
-  width: 450px;
-  max-width: 450px;
-`
-
-const TableCell = styled.div`
-  display: flex;
+const TableCell = styled.td`
   justify-content: center;
   align-items: center;
 
-  padding-left: 14px;
-  padding-right: 14px;
+  font-size: 16px;
+  padding: 1vw 4.8vw 0 4.8vw;
+
   height: 50px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
 `
 
 const TableText = styled.div`
