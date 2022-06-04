@@ -14,17 +14,31 @@ export function handler(
 
 const API_URL = 'https://'
 
-export function fetchUserData() {
-  let userData: any = []
+export function fetchTraderData() {
+  let traderData: any = []
 
-  fetch(`${API_URL}/data`
+  fetch(`${API_URL}/data/traders`
   , { credentials: 'include', method: 'GET',  }
   )
   .then(resp => resp.json())
   .then(itemArray => {
-    itemArray.forEach((item: any) => userData.push(item))
+    itemArray.forEach((item: any) => traderData.push(item))
   })
 
-  return userData
+  return traderData
 }
+
+export function fetchSocialData() {
+    let socialData: any = []
+  
+    fetch(`${API_URL}/data/social`
+    , { credentials: 'include', method: 'GET',  }
+    )
+    .then(resp => resp.json())
+    .then(itemArray => {
+      itemArray.forEach((item: any) => socialData.push(item))
+    })
+  
+    return socialData
+  }
 
