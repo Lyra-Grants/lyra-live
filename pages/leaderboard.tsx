@@ -16,6 +16,17 @@ type TPT = {
   positions: Position[]
 }
 
+/**
+ * @todo Process `apoat` data to fit the `LyraLiveDatum` format
+ */
+type LyraLiveDatum = {
+  address: string
+  trades: number
+  percentChangePnL: number
+  pnl: number
+  rank: number
+}
+
 
 const COLUMNS = [
   {
