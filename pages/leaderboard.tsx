@@ -211,7 +211,7 @@ const Leaderboard = () => {
   return (
     <>
       <Box layerStyle={ 'none' } py={ 4 } px={ 10 } overflowX={ "scroll" }>
-        <Table title='Leaderboard' columns={ COLUMNS } data={ data } />
+        <Table title='Leaderboard' columns={ COLUMNS } data={ lyraLiveData } />
       </Box>
     </>
   )
