@@ -1,6 +1,9 @@
 # Lyra Live _/
 View leaderboard, follow profitable traders, receive notifications and research trades.
 
+## NOTE
+**Make sure to update the `Position` class in `node_modules`. Remove all `public` keywords, since we do not need to store these properties in our database.**
+
 ## Goal 
 To surface leaderboard of profitable traders on Lyra.
 Encourage competition amongst traders and give insight into high performant accounts.
