@@ -3,7 +3,7 @@ import { Button } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
 import type { Web3ReactHooks } from '@web3-react/core'
 import type { MetaMask } from '@web3-react/metamask'
-import { WalletConnect } from '@web3-react/walletconnect'
+// import { WalletConnect } from '@web3-react/walletconnect'
 
 import { CHAINS, URLS, opMainnetChainID } from '../../connectors/chains'
 
@@ -52,7 +52,7 @@ export function ConnectWithSelect({
   error,
   setError,
 }: {
-  connector: MetaMask | WalletConnect
+  connector: MetaMask // | WalletConnect
   chainId: ReturnType<Web3ReactHooks['useChainId']>
   isActivating: ReturnType<Web3ReactHooks['useIsActivating']>
   isActive: ReturnType<Web3ReactHooks['useIsActive']>
@@ -82,17 +82,17 @@ export function ConnectWithSelect({
         return
       }
 
-      if (connector instanceof WalletConnect) {
-        connector
-          .activate(desiredChainId === -1 ? undefined : desiredChainId)
-          .then(() => setError(undefined))
-          .catch(setError)
-      } else {
-        connector
-          .activate(desiredChainId === -1 ? undefined : opMainnetChainID)
-          .then(() => setError(undefined))
-          .catch(setError)
-      }
+      // if (connector instanceof WalletConnect) {
+      //   connector
+      //     .activate(desiredChainId === -1 ? undefined : desiredChainId)
+      //     .then(() => setError(undefined))
+      //     .catch(setError)
+      // } else {
+      connector
+        .activate(desiredChainId === -1 ? undefined : opMainnetChainID)
+        .then(() => setError(undefined))
+        .catch(setError)
+      // }
     },
     [connector, chainId, setError]
   )
@@ -100,17 +100,17 @@ export function ConnectWithSelect({
   const onClick = useCallback((): void => {
     setError(undefined)
 
-    if (connector instanceof WalletConnect) {
-      connector
-        .activate(desiredChainId === -1 ? undefined : desiredChainId)
-        .then(() => setError(undefined))
-        .catch(setError)
-    } else {
-      connector
-        .activate(desiredChainId === -1 ? undefined : opMainnetChainID)
-        .then(() => setError(undefined))
-        .catch(setError)
-    }
+    // if (connector instanceof WalletConnect) {
+    //   connector
+    //     .activate(desiredChainId === -1 ? undefined : desiredChainId)
+    //     .then(() => setError(undefined))
+    //     .catch(setError)
+    // } else {
+    connector
+      .activate(desiredChainId === -1 ? undefined : opMainnetChainID)
+      .then(() => setError(undefined))
+      .catch(setError)
+    // }
   }, [connector, desiredChainId, setError])
 
   if (error) {
@@ -151,15 +151,16 @@ export function ConnectWithSelect({
             isActivating
               ? undefined
               : () =>
-                connector instanceof WalletConnect
-                  ? connector
-                    .activate(desiredChainId === -1 ? undefined : desiredChainId)
-                    .then(() => setError(undefined))
-                    .catch(setError)
-                  : connector
-                    .activate(desiredChainId === -1 ? undefined : opMainnetChainID)
-                    .then(() => setError(undefined))
-                    .catch(setError)
+                // connector instanceof WalletConnect
+                //   ? connector
+                //     .activate(desiredChainId === -1 ? undefined : desiredChainId)
+                //     .then(() => setError(undefined))
+                //     .catch(setError)
+                //   : 
+                connector
+                  .activate(desiredChainId === -1 ? undefined : opMainnetChainID)
+                  .then(() => setError(undefined))
+                  .catch(setError)
           }
         >
           Connect
