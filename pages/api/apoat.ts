@@ -2,11 +2,10 @@ import type {
   NextApiRequest as NAReq,
   NextApiResponse as NARes
 } from 'next'
-// import { gql, useQuery } from '@apollo/client'
-import { lyra } from '@/src/lib/lyra'
 import { gql, useQuery } from '@apollo/client'
 import { Position } from '@lyrafinance/lyra-js'
 
+import { lyra } from '@/src/lib/lyra'
 import { TPT } from '@/src/lib/types'
 import { connectToDB } from '@/src/lib/mongodb'
 import { apolloClient } from '@/src/lib/graphql/apollo'

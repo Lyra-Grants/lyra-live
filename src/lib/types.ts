@@ -1,7 +1,3 @@
-/**
- * @dev We needed to overwrite `lyra-js`'s `Position` object because we don't 
- *      need to store the private variables to our database.
- */
 import { Position } from '@lyrafinance/lyra-js'
 
 // _T_rader _p_ositions _t_ype

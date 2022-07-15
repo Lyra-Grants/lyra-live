@@ -7,6 +7,4 @@ const providerUrl = url + key
 
 const provider = new ethers.providers.JsonRpcProvider(providerUrl, 10)
 
-export const lyra = new Lyra({
-  provider: provider
-})
+export const lyra = new Lyra({ provider: provider })

@@ -2,13 +2,10 @@ import type {
   NextApiRequest as NAReq,
   NextApiResponse as NARes
 } from 'next'
-// import { gql, useQuery } from '@apollo/client'
-import { lyra } from '@/src/lib/lyra'
 import { Position } from '@lyrafinance/lyra-js'
 
+import { lyra } from '@/src/lib/lyra'
 import { connectToDB } from '@/src/lib/mongodb'
-// import { TradesQueryType, GET_TRADES } from '../../lib/graphql/queries'
-// import { apolloClient } from '../../lib/graphql/apollo'
 
 
 export default async function positions(req: NAReq, res: NARes): Promise<void> {
