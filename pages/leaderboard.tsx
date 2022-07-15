@@ -7,6 +7,7 @@ import React, {
 import { Box, HStack, Text } from "@chakra-ui/react";
 
 import Table from '../src/components/Table'
+import getLyraPositions from "../lyra/getLyraPositions/getLyraPositions";
 
 const data = [
   {
@@ -100,7 +101,7 @@ const Index = () => {
   // useLayoutEffect(() => {
   //   if (COLUMNS && data) setIsLoading(false)
   // }, [COLUMNS, data, isLoading])
-
+  
   return (
     <>
       <Box layerStyle={"card"} py={4} px={8} overflowX={"scroll"}>

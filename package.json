@@ -59,5 +59,10 @@
       "eslint --fix",
       "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
     ]
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }
