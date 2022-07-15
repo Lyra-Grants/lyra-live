@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { theme } from "@/src/theme";
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Text } from "@chakra-ui/react";
 
 type TableProps = {
@@ -16,24 +16,24 @@ const Table: FC<TableProps> = ({
 }) => {
   const getTableCellKey = (_dataCol: any, _index: number): string => {
     let wallet: string = ''
-  
+
     switch (_index) {
       case 0:
-        wallet = `${ _dataCol.wallet }`
+        wallet = `${_dataCol.wallet}`
       case 1:
-        wallet = `${ _dataCol.wallet }_tradeCount`
+        wallet = `${_dataCol.wallet}_tradeCount`
         break
       case 2:
-        wallet = `${ _dataCol.wallet }_duration`
+        wallet = `${_dataCol.wallet}_duration`
         break
       case 3:
-        wallet = `${ _dataCol.wallet }_favAsset`
+        wallet = `${_dataCol.wallet}_favAsset`
         break
       case 4:
-        wallet = `${ _dataCol.wallet }_pnl`
+        wallet = `${_dataCol.wallet}_pnl`
         break
     }
-    
+
     return wallet
   }
 
@@ -60,39 +60,50 @@ const Table: FC<TableProps> = ({
 
   return (
     <>
-      <Text variant="title" mb={4}>{title}</Text>
-        <TableWrapper>
-          <tr key={'header'}>
-            { columns && columns.map( (column, index: number): any => (
-              <TableHeader className={`${column.Header}`} key={`${ index }-${column.id}`}>
-                {`${column.Header}`}
-              </TableHeader>
-            ))}
-          </tr>
-            <Scroll>
-            { data && data.map( (dataCol: any, index: number): any => (
-              <tr key={index}>
-                {Object.values(dataCol).map((val: any) => (
-                  <TableCell key={getTableCellKey(dataCol, index)}>
-                    {val.length > 10 ? val.slice(0, 6) + '...' : val}
-                  </TableCell>
-                ))}
-              </tr>
-            ))}
-            </Scroll>
-        </TableWrapper>
+      <Text variant="title" mb={ 4 }>{ title }</Text>
+      <TableWrapper>
+        <StickyHeader key='header'>
+          { columns && columns.map((column, index: number): any => (
+            <TableHeader
+              className={ `${column.Header}` }
+              key={ `${index}-${column.id}` }
+            >
+              { `${column.Header}` }
+            </TableHeader>
+          )) }
+        </StickyHeader>
+        <div>
+          { data && data.map((dataCol: any, index: number): any => (
+            <tr key={ index }>
+              { Object.values(dataCol).map((val: any) => (
+                <TableCell key={ getTableCellKey(dataCol, index) }>
+                  { val.length > 10 ? val.slice(0, 6) + '...' : val }
+                </TableCell>
+              )) }
+            </tr>
+          )) }
+        </div>
+      </TableWrapper>
     </>
   )
 }
 
-const Scroll = styled.div`
-  overflow-y: scroll;
-  max-height: 200px;
-  scroll: smooth;
+const StickyHeader = styled.div`
+  position: sticky;
+  top: 0;
+  background-color: #1B1D22;
+  border-bottom: 1px solid #76D3C4;
 `
 
 const TableWrapper = styled.div`
   justify-content: space-around;
+
+  overflow-X: scroll;
+  overflow-y: scroll;
+  scroll: smooth;
+
+  max-width: 709px;
+  max-height: 300px;
 
   margin-bottom: 50px;
 
@@ -106,20 +117,18 @@ const TableWrapper = styled.div`
   border-width: 0.2rem;
   border-radius: 0.1rem;
   border-style: normal;
-  border: 1px solid red;
-
-  font-size: 18px;
-  font-weight: 600;
+  border: 1px solid #76D3C4;
 `
 
 const TableHeader = styled.th`
-  color: #ffc482;
+  color: #76D3C4;
+
+  white-space: nowrap;
   
-  font-size: 18px;
+  font-size: 14.2px;
   font-weight: 600;
   
-  padding: 1.5vw 3.8vw 1.5vw 3.8vw;
-
+  padding: 12px 3.8vw 12px 3.8vw;
 `
 
 const TableColumn = styled.div`
@@ -130,8 +139,10 @@ const TableCell = styled.td`
   justify-content: center;
   align-items: center;
 
-  font-size: 16px;
-  padding: 1vw 4.8vw 0 4.8vw;
+  white-space: nowrap;
+
+  font-size: 13px;
+  padding: 10px 4.8vw 0vw 4.8vw;
 
   height: 50px;
 
@@ -139,7 +150,7 @@ const TableCell = styled.td`
 `
 
 const TableText = styled.div`
-  padding-right: 10px;
+  padding-right: 0px;
 `
 
 

@@ -61,7 +61,7 @@ const COLUMNS = [
     Cell: ({ value }: { value: any }) => {
       return (
         <HStack>
-          <pre>{value}</pre>
+          <p>{ value }</p>
         </HStack>
       );
     },
@@ -87,7 +87,7 @@ const COLUMNS = [
     accessor: "pnl",
     Cell: ({ value }: { value: any }) => {
       const percent = parseFloat(`${value}`).toFixed(2);
-      return <Text>{percent}%</Text>;
+      return <Text>{ percent }%</Text>;
     },
   },
 ];
@@ -103,10 +103,10 @@ const Index = () => {
 
   return (
     <>
-      <Box layerStyle={"card"} py={4} px={8} overflowX={"scroll"}>
-      {/* <InfoBox> */}
-        <Table title='Leaderboard' columns={COLUMNS} data={data}/>
-      {/* </InfoBox> */}
+      <Box layerStyle={ "card" } py={ 4 } px={ 8 } overflowX={ "scroll" }>
+        {/* <InfoBox> */ }
+        <Table title='Leaderboard' columns={ COLUMNS } data={ data } />
+        {/* </InfoBox> */ }
       </Box>
     </>
   );
