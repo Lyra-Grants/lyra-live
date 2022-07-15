@@ -1,10 +1,11 @@
 import { ethers } from 'ethers'
 import Lyra from '@lyrafinance/lyra-js'
 
-const provider = new ethers.providers.JsonRpcProvider(
-  'https://optimism-mainnet.infura.io/v3/55720bcf28514c6ba661482aa258564e',
-  10
-)
+const url = 'https://optimism-mainnet.infura.io/v3/'
+const key = process.env.NEXT_PUBLIC_INFURA_KEY
+const providerUrl = url + key
+
+const provider = new ethers.providers.JsonRpcProvider(providerUrl, 10)
 
 export const lyra = new Lyra({
   provider: provider

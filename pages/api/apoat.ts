@@ -7,16 +7,10 @@ import { lyra } from '@/src/lib/lyra'
 import { gql, useQuery } from '@apollo/client'
 import { Position } from '@lyrafinance/lyra-js'
 
+import { TPT } from '@/src/lib/types'
 import { connectToDB } from '@/src/lib/mongodb'
 import { apolloClient } from '@/src/lib/graphql/apollo'
 import { TradesQueryType, GET_TRADES } from '@/src/lib/graphql/queries'
-
-
-// _T_rader _p_ositions _t_ype
-type TPT = {
-  address: string
-  positions: Position[]
-}
 
 
 export default async function apoat(req: NAReq, res: NARes): Promise<void> {
@@ -27,10 +21,8 @@ export default async function apoat(req: NAReq, res: NARes): Promise<void> {
     json: any,
     dfq: any = [], // stands for _d_ata _f_rom _q_uery
     queryName = 'trades',
-    exhaustiveData: TradesQueryType[] = [],
     uniqueAccounts: string[] = [],
-    apoat: TPT[] = [], // `apoat` = _a_ll _p_ositions _o_f _a_ll _t_raders
-    tp: TPT = { address: '', positions: [] }
+    exhaustiveData: TradesQueryType[] = []
 
   while (lastID !== undefined) {
     json = await apolloClient.query({  // make new query using `lastID`
@@ -51,17 +43,19 @@ export default async function apoat(req: NAReq, res: NARes): Promise<void> {
   /**
    * @dev Get all positions for each account
    */
-  if (uniqueAccounts !== []) {
-    let account: string = '', positions: Position[] = []
+  let account: string = '',
+    positions: Position[] = [],
+    apoat: TPT[] = [] // `apoat` = _a_ll _p_ositions _o_f _a_ll _t_raders
 
-    for (let i = 0; i < uniqueAccounts.length; i++) {
+  if (uniqueAccounts.length > 0) {
+    for (let i = 0; i < uniqueAccounts.length * 0.05; i++) {
+      const tp: TPT = { address: '', positions: [] }
+
       account = uniqueAccounts[i]
       positions = await lyra.positions(account)
 
-      if (positions !== undefined) {
-        tp.address = account
-        tp.positions = positions
-      }
+      tp.address = account
+      tp.positions = positions
 
       apoat.push(tp)
     }

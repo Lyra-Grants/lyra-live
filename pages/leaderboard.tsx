@@ -1,31 +1,14 @@
-// import { Table } from "@/src/ui/table";
 import React, {
   useState,
   useLayoutEffect,
   useEffect
 } from 'react'
+import { Position } from '@lyrafinance/lyra-js'
 import { Box, HStack, Text } from "@chakra-ui/react"
 
-import Table from '../src/components/Table'
-import { Position } from '@lyrafinance/lyra-js'
-
-
-// _T_rader _p_ositions _t_ype
-type TPT = {
-  address: string
-  positions: Position[]
-}
-
-/**
- * @todo Process `apoat` data to fit the `LyraLiveDatum` format
- */
-type LyraLiveDatum = {
-  address: string
-  trades: number
-  percentChangePnL: number
-  pnl: number
-  rank: number
-}
+import { TPT, LyraLiveDatum } from '@/src/lib/types'
+import Table from '@/src/components/Table'
+import largeJsonOfAPOAT from '@/src/apoat-07-14-2022-11-42-pm.json'
 
 
 const COLUMNS = [
@@ -66,6 +49,27 @@ const COLUMNS = [
     accessor: "rank",
   }
 ]
+
+
+let lyraLiveData: LyraLiveDatum[] = [],
+  llDatum: LyraLiveDatum = {
+    address: '',
+    trades: 0,
+    percentChangePnL: 0.00,
+    pnl: 0.00,
+    rank: 0
+  }
+
+
+function getLLTrades(account: string) {
+  largeJsonOfAPOAT.forEach((traderPositions: any) => {
+    llDatum.address = traderPositions.address
+    llDatum.trades = traderPositions.positions.length
+  })
+}
+
+
+
 
 const data = [
   {

@@ -5,7 +5,7 @@ import type {
 import { gql, useQuery } from '@apollo/client'
 import { Position } from '@lyrafinance/lyra-js'
 
-import { connectToDB } from '@/src/lib/mongodb'
+// import { connectToDB } from '@/src/lib/mongodb'
 import { apolloClient } from '@/src/lib/graphql/apollo'
 import { TradesQueryType, GET_TRADES } from '@/src/lib/graphql/queries'
 
