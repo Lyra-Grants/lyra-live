@@ -41,8 +41,10 @@ const getLyraPositions = async (argv: string[]) => {
     open: { type: 'boolean', alias: 'o', require: false },
     }).argv
 
+    console.log("account arguments", args.account)
+
     const isOpen = args.open
-    const account = args.account ?? '0x90C6577Fb57edF1921ae3F7F45dF7A31e46b9155'
+    const account = args.account ?? '0x23c5c19d2ad460b7cd1ea5d6a2274a3c53733238'
     // const account = args.account ?? signer.address
     const positions = isOpen ? await lyra.openPositions(account) : await lyra.positions(account)
 
