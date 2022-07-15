@@ -1,19 +1,22 @@
-import { HStack, Image, Text, Box } from "@chakra-ui/react";
+import { HStack, Text, Box } from "@chakra-ui/react"
+import Image from "next/image"
+
+import LyraLogo from '../../assets/png/lyra-logo.png'
 
 const Logo = () => {
   return (
-    <HStack height={"100%"}>
+    <HStack>
       <Image
-        src="https://pbs.twimg.com/profile_images/1496137062688382984/YayvjkRp_400x400.jpg"
+        src={ LyraLogo }
         alt="logo"
-        height={"60%"}
-        borderRadius={"50%"}
+        height={ '50px' }
+        width={ '50px' }
       />
-      <Text fontFamily={"Audiowide"} fontSize={"4xl"}>
+      <Text fontFamily={ "Audiowide" } fontSize={ "4xl" }>
         Lyra Live
       </Text>
     </HStack>
-  );
-};
+  )
+}
 
-export default Logo;
+export default Logo
