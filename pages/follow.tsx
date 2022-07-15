@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
 
-const Index = () => {
+const Follow = () => {
   return <Text>WIP</Text>;
 };
 
-export default Index;
+export default Follow

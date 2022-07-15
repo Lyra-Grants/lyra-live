@@ -4,9 +4,57 @@ import React, {
   useLayoutEffect,
   useEffect
 } from 'react'
-import { Box, HStack, Text } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react"
 
 import Table from '../src/components/Table'
+import { Position } from '@lyrafinance/lyra-js'
+
+
+// _T_rader _p_ositions _t_ype
+type TPT = {
+  address: string
+  positions: Position[]
+}
+
+
+const COLUMNS = [
+  {
+    id: "address",
+    Header: "Address",
+    accessor: "address",
+    Cell: ({ value }: { value: any }) => {
+      return <p>{ value }</p>
+    },
+  },
+  {
+    id: "trades",
+    Header: "Trades",
+    accessor: "trades",
+  },
+  {
+    id: "percent_change_pnl",
+    Header: "% Change PnL",
+    accessor: "percent_change_pnl",
+    Cell: ({ value }: { value: any }) => {
+      const percentChangePnL = parseFloat(`${value}`).toFixed(2)
+      return <Text>{ `${percentChangePnL}%` }</Text>
+    },
+  },
+  {
+    id: "pnl",
+    Header: "PnL",
+    accessor: "pnl",
+    Cell: ({ value }: { value: any }) => {
+      const pnl = parseFloat(`${value}`).toFixed(2)
+      return <Text>{ pnl }</Text>
+    },
+  },
+  {
+    id: "rank",
+    Header: "Rank",
+    accessor: "rank",
+  }
+]
 
 const data = [
   {
@@ -51,65 +99,71 @@ const data = [
     favorite_asset: "ETH",
     pnl: 8.23,
   },
-];
+]
 
-const COLUMNS = [
-  {
-    id: "wallet",
-    Header: "Wallet",
-    accessor: "wallet",
-    Cell: ({ value }: { value: any }) => {
-      return (
-        <HStack>
-          <p>{ value }</p>
-        </HStack>
-      );
+/**
+ * @dev _G_ets _a_ll _p_ositions _o_f _a_ll _t_raders
+ */
+async function gapoat() {
+  let apoat: TPT[] = [], // `apoat` = _a_ll _p_ositions _o_f _a_ll _t_raders
+    tp: TPT = { address: '', positions: [] }
+
+  const allAccounts = await getAllAccounts()
+
+  if (allAccounts !== undefined) {
+    for (let i = 0; i < allAccounts.length; i++) {
+      const address = allAccounts[i]
+      const positions = await getPositions(address)
+
+      if (positions !== undefined) {
+        tp.address = address
+        tp.positions = positions
+      }
+
+      apoat.push(tp)
+    }
+  }
+
+  return apoat
+}
+
+async function getAllAccounts() {
+  const req = await fetch('./api/uniqueTraders', {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+
+  const accounts: string[] | undefined = await req.json()
+  return accounts
+}
+
+async function getPositions(account: string): Promise<any> {
+  const req = await fetch('./api/positions', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
     },
-  },
-  {
-    id: "trades_count",
-    Header: "# of Trades",
-    accessor: "trades_count",
-  },
-  {
-    id: "duration",
-    Header: "Duration",
-    accessor: "duration",
-  },
-  {
-    id: "favorite_asset",
-    Header: "Fav Asset",
-    accessor: "favorite_asset",
-  },
-  {
-    id: "pnl",
-    Header: "PnL",
-    accessor: "pnl",
-    Cell: ({ value }: { value: any }) => {
-      const percent = parseFloat(`${value}`).toFixed(2);
-      return <Text>{ percent }%</Text>;
-    },
-  },
-];
+    body: JSON.stringify(account)
+  })
+
+  const positions: Position[] | undefined = await req.json()
+  return positions
+}
 
 
 
-const Index = () => {
-  // const [isLoading, setIsLoading] = useState<Boolean>(true)
-
-  // useLayoutEffect(() => {
-  //   if (COLUMNS && data) setIsLoading(false)
-  // }, [COLUMNS, data, isLoading])
+const Leaderboard = () => {
+  const [_apoat, setAPOAT] = useState<TPT[]>([])
 
   return (
     <>
-      <Box layerStyle={ "card" } py={ 4 } px={ 8 } overflowX={ "scroll" }>
-        {/* <InfoBox> */ }
+      <Box layerStyle={ 'none' } py={ 4 } px={ 10 } overflowX={ "scroll" }>
         <Table title='Leaderboard' columns={ COLUMNS } data={ data } />
-        {/* </InfoBox> */ }
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default Index;
+export default Leaderboard
